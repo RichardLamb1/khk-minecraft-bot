@@ -29,19 +29,39 @@ with open('config.json') as f:
 intents = discord.Intents.default()
 intents.message_content = True
 
-client = discord.Client(intents=intents)
-bot = commands.Bot(command_prefix='$', intents=intents)
+bot = commands.Bot(command_prefix='!', intents=intents)
 
-@client.event
+# Register command /khkmc
+@bot.tree.command(name='khkmc')
+async def _khkmc(interaction: discord.Interaction, arguments: str):
+    args = arguments.split()
+    action = args[0] if len(args) > 0 else None
+    if action == 'whitelist':
+        subaction = args[1] if len(args) > 1 else None
+        username = args[2] if len(args) > 2 else None
+        if subaction == 'add' and username:
+            await interaction.response.send_message(f'Adding {username} to the whitelist...')
+            # Add RCON logic here
+        elif subaction == 'remove' and username:
+            await interaction.response.send_message(f'Removing {username} from the whitelist...')
+            # Add RCON logic here
+        elif subaction == 'list':
+            await interaction.response.send_message('Listing whitelist...')
+            # Add RCON logic here
+        else:
+            await interaction.response.send_message('Invalid subcommand for whitelist.')
+    else:
+        await interaction.response.send_message('Invalid command.')
+
+# Attempt to log in to Discord
+@bot.event
 async def on_ready():
-    print(f'We have logged in as {client.user}')
+    print(f'Logged in as {bot.user}')
+    try:
+        await bot.tree.sync()
+        print('Command tree synced successfully.')
+    except Exception as e:
+        print(f'Failed to sync command tree: {e}')
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-
-    if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
-
-client.run(secrets['bot_token'])
+# Run the bot
+bot.run(secrets['bot_token'])
