@@ -9,6 +9,20 @@ server and executes them over RCON to manage the server's whitelist.
 
 ## Initial Setup
 
+It is highly recommended that you use a Python virtual environment for the
+backend. To create one, run:
+
+```
+python3 -m venv venv &&
+source venv/bin/activate
+```
+
+Install dependencies:
+
+```
+pip install -r requirements.txt
+```
+
 Copy `sample-secrets.json` to `secrets.json` and edit your configuration:
 
   - `bot_token`: The secret token from the Discord developer portal
@@ -22,6 +36,12 @@ Copy `sample-config.json` to `config.json` and edit your configuration:
 
   - `server_address`: The Minecraft server's IP address or hostname
   - `rcon_port`: The RCON port as defined in the `server.properties` file
+
+Start your bot:
+
+```
+python3 bot.py
+```
 
 ## Supported Commands
 
