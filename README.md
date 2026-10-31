@@ -45,6 +45,7 @@ python3 bot.py
 
 ## Supported Commands
 
+  - `/khkmc list`
   - `/khkmc whitelist add <username>`
   - `/khkmc whitelist remove <username>`
   - `/khkmc whitelist list`

@@ -69,8 +69,13 @@ async def _khkmc(interaction: discord.Interaction, arguments: str):
     args = arguments.split()
     action = args[0] if len(args) > 0 else None
 
+    # List action
+    if action == 'list':
+        out = await execute_rcon_command('list')
+        await interaction.response.send_message(f'```{out}```')
+
     # Whitelist action
-    if action == 'whitelist':
+    elif action == 'whitelist':
         subaction = args[1] if len(args) > 1 else None
         username = args[2] if len(args) > 2 else None
         if subaction == 'add' and username:
